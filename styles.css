@@ -1,0 +1,373 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    overscroll-behavior-y: contain;
+    height: 100%;
+}
+
+body {
+    background-color: #1a1a1a;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+    position: relative;
+    scroll-snap-type: y mandatory;
+}
+
+.layer {
+    min-height: 100vh;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 2rem;
+    background-color: #1a1a1a;
+    overflow: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.layer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    padding: 2rem 0;
+}
+
+/* Photo frame specific styles */
+.photo-frame {
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 3/4;
+    background-color: #f6f1ea;
+    border-radius: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    padding-bottom: 32px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.photo-image {
+    width: 100%;
+    height: calc(100% - 32px);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    object-fit: cover;
+    border-radius: 0;
+    background-color: #f5f5f5;
+    display: block;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    position: relative;
+    z-index: 0;
+    margin-bottom: 8px;
+}
+
+.photo-caption {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    text-align: left;
+    color: #000000;
+    font-size: 1.8rem;
+    font-weight: 400;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Great Vibes', cursive;
+    line-height: 1.2;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    z-index: 2;
+    background-color: #f6f1ea;
+    padding: 2px 4px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Counter specific styles */
+h2 {
+    color: #f2f2f2;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.time-counter {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #f2f2f2;
+    margin: 1.5rem 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    line-height: 1.6;
+    text-align: center;
+}
+
+.time-counter .time {
+    display: inline-block;
+    text-align: center;
+}
+
+.paragraph {
+    color: #f2f2f2;
+    opacity: 0.8;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    text-align: left;
+}
+
+.subtle {
+    color: #f2f2f2;
+    opacity: 0.8;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+/* Scroll indicator styles */
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #f2f2f2;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.scroll-indicator.visible {
+    opacity: 1;
+}
+
+.scroll-indicator-text {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.scroll-indicator-arrow {
+    width: 30px;
+    height: 30px;
+    border-right: 2px solid #f2f2f2;
+    border-bottom: 2px solid #f2f2f2;
+    transform: rotate(45deg);
+    animation: bounce 2s infinite;
+}
+
+/* Back to top button styles */
+.back-to-top-button {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: transparent;
+    color: #f2f2f2;
+    border: none;
+    padding: 0;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.back-to-top-button.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.back-to-top-button:hover {
+    transform: translateX(-50%) translateY(-3px);
+}
+
+.back-to-top-text {
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.back-to-top-arrow {
+    width: 30px;
+    height: 30px;
+    border-left: 2px solid #f2f2f2;
+    border-top: 2px solid #f2f2f2;
+    transform: rotate(45deg);
+    animation: bounceUp 2s infinite;
+}
+
+/* Animations */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: rotate(45deg) translateY(0);
+    }
+    40% {
+        transform: rotate(45deg) translateY(-10px);
+    }
+    60% {
+        transform: rotate(45deg) translateY(-5px);
+    }
+}
+
+@keyframes bounceUp {
+    0%, 20%, 50%, 80%, 100% {
+        transform: rotate(45deg) translateY(0);
+    }
+    40% {
+        transform: rotate(45deg) translateY(10px);
+    }
+    60% {
+        transform: rotate(45deg) translateY(5px);
+    }
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    html {
+        scroll-snap-type: y mandatory;
+        overscroll-behavior-y: auto;
+    }
+
+    body {
+        overscroll-behavior-y: auto;
+    }
+
+    .layer {
+        padding: 2.5rem;
+    }
+}
+
+/* iPhone 13 specific adjustments */
+@media screen and (max-width: 390px) {
+    .layer {
+        padding: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .time-counter {
+        font-size: 1.4rem;
+        margin: 1.2rem 0;
+    }
+
+    .subtle {
+        font-size: 0.9rem;
+    }
+}
+
+.intermediate-screen {
+    min-height: 100vh;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    scroll-margin-top: 0;
+    background-color: #1a1a1a;
+}
+
+/* Safari-specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .layer {
+        min-height: -webkit-fill-available;
+        height: -webkit-fill-available;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-perspective: 1000;
+        perspective: 1000;
+    }
+
+    .layer-content {
+        min-height: -webkit-fill-available;
+        height: -webkit-fill-available;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-perspective: 1000;
+        perspective: 1000;
+    }
+
+    .photo-frame {
+        display: block;
+        position: relative;
+    }
+
+    .photo-image {
+        display: block;
+        width: 100%;
+        height: calc(100% - 32px);
+        margin-bottom: 8px;
+    }
+
+    .photo-caption {
+        position: absolute;
+        bottom: 12px;
+        left: 12px;
+        right: 12px;
+        min-height: 24px;
+        padding: 2px 4px;
+        background-color: #f6f1ea;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* Fix for iOS Safari viewport height */
+    @supports (-webkit-touch-callout: none) and (not (translate: none)) {
+        .layer {
+            min-height: 100vh;
+            height: 100vh;
+            min-height: -webkit-fill-available;
+            height: -webkit-fill-available;
+        }
+    }
+} 
